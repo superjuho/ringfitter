@@ -1,0 +1,21 @@
+.input_video {
+    position: absolute;
+    z-index: 201;
+    top: 0;
+    left: 0;
+}
+
+
+.output_canvas {
+    position:absolute;
+    z-index: -201;
+    top: 0;
+    left: 0;
+}
+
+.three_output {
+    position: absolute;
+    z-index: 400;
+    top: 0;
+    left: 0;
+}

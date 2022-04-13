@@ -20,13 +20,6 @@ code {
     monospace;
 }
 
-.container canvas {
-  position: absolute;
-  top: 0vh;
-  left: 0vw;
-
-}
-
 .container {
   width: 100vw;
   height: 100vh;

@@ -1,3 +1,11 @@
+body {
+    user-select: none; /* supported by Chrome and Opera */
+    -webkit-user-select: none; /* Safari */
+    -khtml-user-select: none; /* Konqueror HTML */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+}
+
 .menuContainer {
     position: absolute;
     right: 0;
@@ -29,6 +37,10 @@
     cursor: pointer;
 }
 
+.menuArrow:hover {
+    background-color: darkgrey;
+}
+
 .ringButton {
     height: 80px;
     width: 80px;
@@ -49,16 +61,20 @@
     margin: 10px;
     padding: 10px;
     cursor: pointer;
+    border-radius: 3px;
+    border-style: solid;
+    border-color: black;
+    font-weight: 400;
 }
 
 .ringMenu {
     position: absolute;
-    left: 50vw;
     top: 50vh;
-    width: 300px;
-    height: 600px;
-    margin-left: -150px;
-    margin-top: -300px;
+    left: 50vw;
+    width: 170px;
+    height: 330px;
+    margin-left: -85px;
+    margin-top: -165px;
     z-index: 9001;
     background-color: rgba(255, 255, 255, 0.596);
     display: flex;
@@ -66,6 +82,7 @@
     align-items: center;
     text-align: center;
     justify-content: center;
+    align-self: center;
     overflow-y: auto;
     overflow-x: hidden;
 }
@@ -73,14 +90,18 @@
 .ring {
     background-color: aliceblue;
     width: 120px;
-    height: 120px;
-    margin: 20px;
-    padding: 10px;
+    height: 60px;
+    margin: 10px;
+    padding: 5px;
     display: flex;
     align-items: center;
     text-align: center;
     justify-content: center;
     cursor: pointer;
+    border-radius: 3px;
+    border-style: solid;
+    border-color: black;
+    box-shadow: 2px 3px 4px rgba(0, 0, 0, .6);
 }
 
 .ARButton {
@@ -100,6 +121,8 @@
     justify-content: center;
     cursor: pointer;
     border-radius: 3px;
+    border-style: solid;
+    border-color: white;
 }
 
 @media screen and (max-width: 820px) {

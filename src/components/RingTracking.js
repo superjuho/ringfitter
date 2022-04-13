@@ -8,7 +8,7 @@ import HandPicture from '../static/handpicture.png'
 import * as THREE from 'three';
 import initThreeApp from '../hooks/THREEHooks';
 import '../styles/loading.css'
-import '../styles/outputCanvas.css'
+import '../styles/canvas.css'
 
 const RingTracking = ( { ring } ) => {
     
@@ -61,22 +61,41 @@ const RingTracking = ( { ring } ) => {
     }
 
     useEffect(() => {
+        
+        
         window.addEventListener('resize', () =>{
             window.location.reload(); 
           });
 
         const windowWidth = window.innerWidth;
         const windowHeight = window.innerHeight;
+        
+        var videoElement = document.getElementsByClassName('input_video')[0]
+
+        const getVideo = (string) => {
+            if (string === "height") {
+                return videoElement.offsetHeight;
+            } else if (string === "width") {
+                return videoElement.offsetWidth;
+            }
+        }
 
         var threeCanvasElement = document.getElementsByClassName('three_output')[0]
-        const threeApp = initThreeApp(threeCanvasElement, windowWidth, windowHeight, string)
-
-        if(!loaded) {
+        var threeApp;
+             
+        
+       /* if(!loaded) {
             threeApp.scene.visible = false;
-        }
+        }*/
             const onResults = (results) => {
                 
+                if(threeApp === undefined) {
+                   threeApp = initThreeApp(threeCanvasElement, getVideo("width"), getVideo("height"), string)
+                   return threeApp
+                }
+                setTimeout(() => {
                 const canvasElement = document.getElementsByClassName('output_canvas')[0]
+                canvasElement.setAttribute("style", "height:" + videoElement.offsetHeight + "px; width:" + videoElement.offsetWidth + "px;")
                 const canvasCtx = canvasElement.getContext('2d')
                 const modelTop = threeApp.scene.getObjectByName('RingTop')
                 const modelBottom = threeApp.scene.getObjectByName('RingBottom')
@@ -158,8 +177,8 @@ const RingTracking = ( { ring } ) => {
                         }*/
                         
 
-                        modelBottom.lookAt(threeApp.threeCamera.position)
-                        modelTop.lookAt(threeApp.threeCamera.position)
+                        /*modelBottom.lookAt(threeApp.threeCamera.position)
+                        modelTop.lookAt(threeApp.threeCamera.position)*/
                         
                         /*if(modelBottom.rotation.z !== calculateAngle( y, by, x, bx) 
                         && modelBottom.rotation.z !== (calculateAngle(y, by, x, bx) > (calculateAngle(y, by, x, bx) + 10)) 
@@ -204,19 +223,19 @@ const RingTracking = ( { ring } ) => {
                         
                         drawConnectors(
                             canvasCtx, landmarks, HAND_CONNECTIONS,
-                            {color: isRightHand ? '#FFFFFF' : '#00FFF7'});
+                            {color: isRightHand ? '#FFFFFF' : '#00FFF7', lineWidth: 5});
 
                         drawLandmarks(canvasCtx, landmarks, {
                             color: isRightHand ? '#FFFFFF' : '#00FFF7',
                             fillColor: isRightHand ? '#00FFF7' : '#FFFFFF',
+                            lineWidth: 2
                             });
                     }            
                 }
                 canvasCtx.restore();
+            }, (1000/60))
             }
 
-        var videoElement = document.getElementsByClassName('input_video')[0]
-        videoElement.setAttribute("playsinline", true)
 
         const hands = new Hands({locateFile: (file) => {
         return `https://cdn.jsdelivr.net/npm/@mediapipe/hands/${file}`;
@@ -235,19 +254,23 @@ const RingTracking = ( { ring } ) => {
         onFrame: async () => {
             await hands.send({image: videoElement});
             setLoaded(true)
+            run();
         },
         facingMode: 'environment',
-        width: {ideal: 720},
+        height: {ideal: windowHeight},
+        
 
         });
         
         const run = async () =>{
-        threeApp.render()
-        requestAnimationFrame(run)
+            threeApp.render()
+            requestAnimationFrame(run) 
         }
         
         camera.start();
-        run();
+
+        
+        
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
     },[string])
@@ -256,9 +279,9 @@ const RingTracking = ( { ring } ) => {
         <>
         <Link className="backButton" to="/">⏮</Link>
         <div className="container">
-            <video className="input_video" autoPlay></video>
-            <canvas className="output_canvas" width={window.innerWidth} height={window.innerHeight} display={"none"}></canvas>
-            <canvas className="three_output" width={window.innerWidth} height={window.innerHeight}></canvas>
+            <video className="input_video"></video>
+            <canvas className="output_canvas"></canvas>
+            <canvas className="three_output"></canvas>
             {loaded &&<img className="handpicture" src={HandPicture} alt="handpicture"/>}
         </div>
         {!loaded && <img className="loadingLogo" alt="loadingLogo" src={HXRC}/>}

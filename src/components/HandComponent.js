@@ -9,6 +9,7 @@ import { FBXLoader } from 'three-stdlib';
 import SilverRing from '../static/models/SilverRing.fbx'
 import TiffanyRing from '../static/models/TiffanyRing.fbx'
 import GoldRing from '../static/models/GoldRing.fbx'
+import DetailedRing from '../static/models/DetailedRing.fbx'
 import initThreeApp from '../hooks/THREEHooks';
 import '../styles/loading.css'
 import '../styles/menuContainer.css'
@@ -77,7 +78,7 @@ const HandComponent = () => {
       const windowWidth = window.innerWidth
       const windowHeight = window.innerHeight
 
-        var threeCanvasElement = document.getElementsByClassName('three_output')[0]
+        var threeCanvasElement = document.getElementsByClassName('three')[0]
         const threeApp = initThreeApp(threeCanvasElement, windowWidth, windowHeight, 'hand')
         setApp(threeApp)  
 
@@ -130,9 +131,12 @@ const HandComponent = () => {
       <div className="ring" onClick={() => {setSelectedRing(TiffanyRing); setRingString("TiffanyRing"); upDateRing(TiffanyRing)}}>
           Tiffany Ring
       </div>
+      <div className="ring" onClick={() => {setSelectedRing(DetailedRing); setRingString("DetailedRing"); upDateRing(DetailedRing)}}>
+          Elven Ring
+      </div>
     </div>}
     <div className="container">
-        <canvas className="three_output" width={window.innerWidth} height={window.innerHeight} cursor="grab"></canvas>
+        <canvas className="three" width={window.innerWidth} height={window.innerHeight} cursor="grab"></canvas>
     </div>
     {!loaded && <img className="loadingLogo" alt="loadingLogo" src={HXRC}/>}
     {ringString.length > 2 && <Link to="/AR" state={{ ring: ringString, fingerSelected }} className="ARButton">

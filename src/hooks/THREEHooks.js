@@ -4,6 +4,8 @@ import RingTop from '../static/models/Ring_Top_fixed.fbx'
 import RingBottom from '../static/models/Ring_Bottom.fbx'
 import SRingTop from '../static/models/SilverRing1.fbx'
 import SRingBottom from '../static/models/SilverRing2.fbx'
+import DRingTop from '../static/models/DetailedRing1.fbx'
+import DRingBottom from '../static/models/DetailedRing2.fbx'
 import HAND from '../static/models/FixedAgainHand.fbx'
 
 
@@ -49,8 +51,8 @@ const initThreeApp = (canvas, w, h, string) => {
     const scene = new THREE.Scene()
 
     const resize = () => {
-        const width = w || windowWidth
-        const height = h || windowHeight
+        const width = w
+        const height = h 
 
         renderer.setSize(width, height)
         renderer.setPixelRatio(window.pixelRatio)
@@ -115,7 +117,20 @@ const initThreeApp = (canvas, w, h, string) => {
             object.name = 'RingBottom'
             object.scale.set(.05,.05,.05)
             })
-    } 
+    } else if (string === 'DetailedRing') {
+        loader.load(DRingTop, (object) => {
+            scene.add(object)
+            object.name = "RingTop"
+            object.scale.set(.05, .05, .05)
+
+            loader.load(DRingBottom, (object) => {
+                scene.add(object)
+                object.name = 'RingBottom'
+                object.scale.set(.05,.05,.05)
+                })
+        })
+
+    }
     else if(string === 'hand') {
         loader.load(HAND, (object) => {
             scene.add(object)
