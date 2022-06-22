@@ -1,4 +1,4 @@
-![Alt Text](https://i.imgur.com/C3V6Rz9.gif)
+![](https://i.imgur.com/C3V6Rz9.gifv)
 
 # Getting Started with Create React App
 
